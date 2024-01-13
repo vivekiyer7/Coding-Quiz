@@ -48,8 +48,8 @@ document.addEventListener('DOMContentLoaded', function () {
     questionTitleEl.textContent =
       'Ques:' + `${currentQuestionIndex + 1}: ` + question.question
 
-    let answerTitleEl = document.getElementById('answer-title')
-    answerTitleEl.textContent = 'Answer:'
+    let answerheaderEl = document.getElementById('answer-header')
+    answerheaderEl.textContent = 'Options:'
 
     let choicesContainer = document.getElementById('choices')
     choicesContainer.innerHTML = '' // Clear previous choices
@@ -74,6 +74,14 @@ document.addEventListener('DOMContentLoaded', function () {
     if (answer === quizQuestions[currentQuestionIndex].correctAnswer) {
       // If the answer is correct, increase the score
       score++
+      //Display Answer as Correct or Incorrect
+      let answerstatusEl = document.getElementById('answer-status')
+      answerstatusEl.textContent = 'Answer Status: Correct'
+    }
+    else {
+      //Display Answer as Correct or Incorrect
+      let answerstatusEl = document.getElementById('answer-status')
+      answerstatusEl.textContent = 'Answer Status: Incorrect'
     }
 
     // Move to the next question
