@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // Your existing code here
   let currentQuestionIndex = 0
   let score = 0
-  let totalTime = 30
+  let totalTime = 15
   let timerDisplay = document.getElementById('time')
   let timerInterval
   let startScreen = document.getElementById('start-screen')
@@ -33,7 +33,9 @@ document.addEventListener('DOMContentLoaded', function () {
     } else {
       clearInterval(timerInterval)
       timerDisplay.textContent = "0 -- Time's Up!"
-      // Handle end of quiz logic here
+      // Hide the questions container
+      questionsContainer.style.display = 'none'
+      endQuiz()
     }
   }
 
@@ -43,7 +45,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Clear previous question and answer elements
     let questionTitleEl = document.getElementById('question-title')
-    questionTitleEl.textContent = 'Ques:' + `${currentQuestionIndex + 1}: ` + question.question
+    questionTitleEl.textContent =
+      'Ques:' + `${currentQuestionIndex + 1}: ` + question.question
 
     let answerTitleEl = document.getElementById('answer-title')
     answerTitleEl.textContent = 'Answer:'
@@ -80,7 +83,8 @@ document.addEventListener('DOMContentLoaded', function () {
     if (currentQuestionIndex < quizQuestions.length) {
       displayQuestion(currentQuestionIndex)
     } else {
-      // If there are no more questions, end the quiz
+      //hide the questions container
+      questionsContainer.style.display = 'none'
       endQuiz()
     }
   }
