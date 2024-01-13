@@ -1,83 +1,100 @@
-let currentQuestionIndex = 0;
-let score = 0;
-let totalTime = 60;
+document.addEventListener('DOMContentLoaded', function () {
+  // Your existing code here
+  let currentQuestionIndex = 0
+  let score = 0
+  let totalTime = 30
+  let timerDisplay = document.getElementById('time')
+  let timerInterval
+  let startScreen = document.getElementById('start-screen')
+  let questionsContainer = document.getElementById('questions-html')
 
-// Start the quiz
-function startQuiz() {
-    // Start the timer
-    let timer = setInterval(function() {
-        totalTime--;
-        // Update the timer display in HTML
-        // Assuming you have a timer element with id 'timer'
-        document.getElementById('timer').textContent = totalTime;
+  timerDisplay.textContent = totalTime
 
-        // If the time runs out, end the quiz
-        if (totalTime <= 0) {
-            clearInterval(timer);
-            endQuiz();
-        }
-    }, 1000);
+  var startBtn = document.querySelector('#start')
 
-    // Display the first question
-    displayQuestion(currentQuestionIndex);
-}
-function displayQuestion(index) {
-    // Retrieve the question
-    let question = quizQuestions[index];
+  startBtn.addEventListener('click', function () {
+    startQuiz()
+    displayQuestion()
+  })
 
-    // Update the question text in HTML
-    // Assuming you have a question element with id 'question'
-    document.getElementById('question').textContent = question.question;
+  function startQuiz () {
+    updateTimer()
+    timerInterval = setInterval(updateTimer, 1000)
+    // Hide the start screen when the quiz starts
+    startScreen.style.display = 'none'
+    // Apply flex styles to center questions when starting the quiz
+    questionsContainer.style.display = 'flex'
+  }
 
-    // Update the choices in HTML
-    // Assuming you have choice elements with ids 'choice1', 'choice2', etc.
-    for (let i = 0; i < question.choices.length; i++) {
-        document.getElementById('choice' + (i + 1)).textContent = question.choices[i];
+  function updateTimer () {
+    if (totalTime > 0) {
+      totalTime--
+      timerDisplay.textContent = totalTime
+    } else {
+      clearInterval(timerInterval)
+      timerDisplay.textContent = "0 -- Time's Up!"
+      // Handle end of quiz logic here
     }
-}
-function handleAnswer(answer) {
+  }
+
+  function displayQuestion () {
+    // Assuming you have an array of questions named quizQuestions
+    let question = quizQuestions[currentQuestionIndex]
+
+    // Clear previous question and answer elements
+    let questionTitleEl = document.getElementById('question-title')
+    questionTitleEl.textContent = 'Ques:' + `${currentQuestionIndex + 1}: ` + question.question
+
+    let answerTitleEl = document.getElementById('answer-title')
+    answerTitleEl.textContent = 'Answer:'
+
+    let choicesContainer = document.getElementById('choices')
+    choicesContainer.innerHTML = '' // Clear previous choices
+
+    // Display each option on a separate line with numbering
+    for (let j = 0; j < question.choices.length; j++) {
+      let choice = question.choices[j]
+
+      let choiceEl = document.createElement('button')
+      choiceEl.textContent = `${j + 1}. ${choice}` // Add numbering
+      choiceEl.addEventListener('click', function () {
+        handleAnswer(choice)
+      })
+
+      choicesContainer.appendChild(choiceEl)
+      choicesContainer.appendChild(document.createElement('br')) // Add line break
+    }
+  }
+
+  function handleAnswer (answer) {
     // Check if the answer is correct
     if (answer === quizQuestions[currentQuestionIndex].correctAnswer) {
-        // If the answer is correct, increase the score
-        score++;
+      // If the answer is correct, increase the score
+      score++
     }
 
     // Move to the next question
-    currentQuestionIndex++;
+    currentQuestionIndex++
 
     // If there are more questions, display the next one
     if (currentQuestionIndex < quizQuestions.length) {
-        displayQuestion(currentQuestionIndex);
+      displayQuestion(currentQuestionIndex)
     } else {
-        // If there are no more questions, end the quiz
-        endQuiz();
+      // If there are no more questions, end the quiz
+      endQuiz()
     }
-}
-function endQuiz() {
+  }
+
+  function endQuiz () {
     // Stop the timer
-    clearInterval(timer);
+    clearInterval(timerInterval)
 
     // Display the final score
-    // Assuming you have a score element with id 'score'
-    document.getElementById('score').textContent = score;
-}
+    let scoreElement = document.getElementById('final-score')
+    scoreElement.textContent = score
 
-//Call the Start Quiz function on click of the start button
-document.getElementById('start').addEventListener('click', startQuiz);
-
-//Call the handleAnswer function on click of the choices
-document.getElementById('choice1').addEventListener('click', function() {
-    handleAnswer(document.getElementById('choice1').textContent);
-});
-document.getElementById('choice2').addEventListener('click', function() {
-    handleAnswer(document.getElementById('choice2').textContent);
-});
-document.getElementById('choice3').addEventListener('click', function() {
-    handleAnswer(document.getElementById('choice3').textContent);
-});
-document.getElementById('choice4').addEventListener('click', function() {
-    handleAnswer(document.getElementById('choice4').textContent);
-});
-
-
-startQuiz();
+    // Show the end screen
+    let endScreen = document.getElementById('end-screen')
+    endScreen.style.display = 'block'
+  }
+})
