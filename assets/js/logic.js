@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // Your existing code here
   let currentQuestionIndex = 0
   let score = 0
-  let totalTime = 15
+  let totalTime = 60
   let timerDisplay = document.getElementById('time')
   let timerInterval
   let startScreen = document.getElementById('start-screen')
@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   submitBtn.addEventListener('click', function () {
     submit_score()
-    })
+  })
 
   function startQuiz () {
     updateTimer()
@@ -74,31 +74,36 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
-  function handleAnswer(answer) {
-    let answerstatusEl = document.getElementById('answer-status');
-    
+  function handleAnswer (answer) {
+    let answerstatusEl = document.getElementById('answer-status')
+
     // Check if the answer is correct
     if (answer === quizQuestions[currentQuestionIndex].correctAnswer) {
       // If the answer is correct, increase the score
-      score++;
-      answerstatusEl.textContent = 'Answer Status: Correct';
+      score++
+      answerstatusEl.textContent = 'Answer Status: Correct'
     } else {
-      answerstatusEl.textContent = 'Answer Status: Incorrect';
+      answerstatusEl.textContent = 'Answer Status: Incorrect'
+      // If the answer is wrong, penalize the time
+      totalTime -= 5
+      if (totalTime < 0) {
+        totalTime = 0
+      }
+      timerDisplay.textContent = totalTime
     }
-  
+
     // Move to the next question
-    currentQuestionIndex++;
-  
+    currentQuestionIndex++
+
     // If there are more questions, display the next one
     if (currentQuestionIndex < quizQuestions.length) {
-      displayQuestion(currentQuestionIndex);
+      displayQuestion(currentQuestionIndex)
     } else {
       // Hide the questions container
-      questionsContainer.style.display = 'none';
-      endQuiz();
+      questionsContainer.style.display = 'none'
+      endQuiz()
     }
   }
-  
 
   function endQuiz () {
     // Stop the timer
@@ -114,16 +119,16 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function submit_score () {
-        let initials = document.querySelector('#initials').value
-        let newScore = {
-            initials: initials,
-            score: score
-        }
-        //Save in local storage of highscores.html page
+    let initials = document.querySelector('#initials').value
+    let newScore = {
+      initials: initials,
+      score: score
+    }
+    //Save in local storage of highscores.html page
 
-        let highScores = JSON.parse(localStorage.getItem('highscoresstorage')) || []
-        highScores.push(newScore)
-        localStorage.setItem('highscoresstorage', JSON.stringify(highScores))
-        window.location.href = './assets/html/highscores.html'
-    }  
+    let highScores = JSON.parse(localStorage.getItem('highscoresstorage')) || []
+    highScores.push(newScore)
+    localStorage.setItem('highscoresstorage', JSON.stringify(highScores))
+    window.location.href = './assets/html/highscores.html'
+  }
 })

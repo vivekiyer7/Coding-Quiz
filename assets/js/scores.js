@@ -1,7 +1,4 @@
 document.addEventListener('DOMContentLoaded', function () {
-    // Retrieve the high scores from local storage on page load
-    // Store the scores in an array
-    // Display the scores on the page
     displayhighScore();
   
     // Clear High Scores button
