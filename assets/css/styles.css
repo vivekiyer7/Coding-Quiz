@@ -42,6 +42,7 @@ ol {
   padding-left: 0px;
   max-height: 400px;
   overflow: auto;
+  text-align: left;
 }
 
 li {

@@ -11,11 +11,16 @@ document.addEventListener('DOMContentLoaded', function () {
   timerDisplay.textContent = totalTime
 
   var startBtn = document.querySelector('#start')
+  var submitBtn = document.querySelector('#submit')
 
   startBtn.addEventListener('click', function () {
     startQuiz()
     displayQuestion()
   })
+
+  submitBtn.addEventListener('click', function () {
+    submit_score()
+    })
 
   function startQuiz () {
     updateTimer()
@@ -69,33 +74,31 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
-  function handleAnswer (answer) {
+  function handleAnswer(answer) {
+    let answerstatusEl = document.getElementById('answer-status');
+    
     // Check if the answer is correct
     if (answer === quizQuestions[currentQuestionIndex].correctAnswer) {
       // If the answer is correct, increase the score
-      score++
-      //Display Answer as Correct or Incorrect
-      let answerstatusEl = document.getElementById('answer-status')
-      answerstatusEl.textContent = 'Answer Status: Correct'
+      score++;
+      answerstatusEl.textContent = 'Answer Status: Correct';
+    } else {
+      answerstatusEl.textContent = 'Answer Status: Incorrect';
     }
-    else {
-      //Display Answer as Correct or Incorrect
-      let answerstatusEl = document.getElementById('answer-status')
-      answerstatusEl.textContent = 'Answer Status: Incorrect'
-    }
-
+  
     // Move to the next question
-    currentQuestionIndex++
-
+    currentQuestionIndex++;
+  
     // If there are more questions, display the next one
     if (currentQuestionIndex < quizQuestions.length) {
-      displayQuestion(currentQuestionIndex)
+      displayQuestion(currentQuestionIndex);
     } else {
-      //hide the questions container
-      questionsContainer.style.display = 'none'
-      endQuiz()
+      // Hide the questions container
+      questionsContainer.style.display = 'none';
+      endQuiz();
     }
   }
+  
 
   function endQuiz () {
     // Stop the timer
@@ -109,4 +112,18 @@ document.addEventListener('DOMContentLoaded', function () {
     let endScreen = document.getElementById('end-screen')
     endScreen.style.display = 'block'
   }
+
+  function submit_score () {
+        let initials = document.querySelector('#initials').value
+        let newScore = {
+            initials: initials,
+            score: score
+        }
+        //Save in local storage of highscores.html page
+
+        let highScores = JSON.parse(localStorage.getItem('highscoresstorage')) || []
+        highScores.push(newScore)
+        localStorage.setItem('highscoresstorage', JSON.stringify(highScores))
+        window.location.href = './assets/html/highscores.html'
+    }  
 })
