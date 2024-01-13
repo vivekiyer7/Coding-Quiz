@@ -11,14 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   
     function displayhighScore() {
-        console.log('displayHighScore');
-        
-        // Retrieve high scores from local storage
         let highScores = JSON.parse(localStorage.getItem('highscoresstorage')) || [];
-        
-        console.log(highScores);
-        
-        // Display the scores on the page
         let highScoreList = document.getElementById('highscores');
         
         // Clear existing content
@@ -38,10 +31,10 @@ document.addEventListener('DOMContentLoaded', function () {
   
     function clearhighScore() {
       // Clear high scores in local storage
-      localStorage.removeItem('highScores');
+      localStorage.removeItem('highscoresstorage');
   
       // Clear the displayed high scores on the page
-      let highScoreList = document.getElementById('highScoreList');
+      let highScoreList = document.getElementById('highscores');
       highScoreList.innerHTML = '';
     }
   });
