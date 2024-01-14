@@ -71,7 +71,6 @@ document.addEventListener('DOMContentLoaded', function () {
       })
 
       choicesContainer.appendChild(choiceEl)
-      choicesContainer.appendChild(document.createElement('br')) // Add line break
     }
   }
 
@@ -83,8 +82,16 @@ document.addEventListener('DOMContentLoaded', function () {
       // If the answer is correct, increase the score
       score++
       answerstatusEl.textContent = 'Answer Status: Correct'
+      //wait for 2 seconds before moving to next question
+      setTimeout(function () {
+        answerstatusEl.textContent = ''
+      }, 2000)
     } else {
       answerstatusEl.textContent = 'Answer Status: Incorrect'
+      //wait for 2 seconds before moving to next question
+      setTimeout(function () {
+        answerstatusEl.textContent = ''
+      }, 2000)
       // If the answer is wrong, penalize the time
       totalTime -= 10
       if (totalTime < 0) {
