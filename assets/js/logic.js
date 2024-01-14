@@ -7,11 +7,12 @@ document.addEventListener('DOMContentLoaded', function () {
   let timerInterval
   let startScreen = document.getElementById('start-screen')
   let questionsContainer = document.getElementById('questions-html')
-
   timerDisplay.textContent = totalTime
+  var highscores_link = document.getElementById('highscores_page_link');
 
   var startBtn = document.querySelector('#start')
   var submitBtn = document.querySelector('#submit')
+  
 
   startBtn.addEventListener('click', function () {
     startQuiz()
@@ -27,6 +28,7 @@ document.addEventListener('DOMContentLoaded', function () {
     timerInterval = setInterval(updateTimer, 1000)
     // Hide the start screen when the quiz starts
     startScreen.style.display = 'none'
+    highscores_link.style.display = 'none';
     // Apply flex styles to center questions when starting the quiz
     questionsContainer.style.display = 'flex'
   }
