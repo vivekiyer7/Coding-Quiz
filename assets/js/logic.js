@@ -2,17 +2,16 @@ document.addEventListener('DOMContentLoaded', function () {
   // Your existing code here
   let currentQuestionIndex = 0
   let score = 0
-  let totalTime = 60
+  let totalTime = 75
   let timerDisplay = document.getElementById('time')
   let timerInterval
   let startScreen = document.getElementById('start-screen')
   let questionsContainer = document.getElementById('questions-html')
   timerDisplay.textContent = totalTime
-  var highscores_link = document.getElementById('highscores_page_link');
+  var highscores_link = document.getElementById('highscores_page_link')
 
   var startBtn = document.querySelector('#start')
   var submitBtn = document.querySelector('#submit')
-  
 
   startBtn.addEventListener('click', function () {
     startQuiz()
@@ -28,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function () {
     timerInterval = setInterval(updateTimer, 1000)
     // Hide the start screen when the quiz starts
     startScreen.style.display = 'none'
-    highscores_link.style.display = 'none';
+    highscores_link.style.display = 'none'
     // Apply flex styles to center questions when starting the quiz
     questionsContainer.style.display = 'flex'
   }
@@ -87,7 +86,7 @@ document.addEventListener('DOMContentLoaded', function () {
     } else {
       answerstatusEl.textContent = 'Answer Status: Incorrect'
       // If the answer is wrong, penalize the time
-      totalTime -= 5
+      totalTime -= 10
       if (totalTime < 0) {
         totalTime = 0
       }
